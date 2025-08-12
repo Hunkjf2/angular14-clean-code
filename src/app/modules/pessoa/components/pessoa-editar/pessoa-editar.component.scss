@@ -1,0 +1,43 @@
+// Editar component styles
+.edit-header {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+
+.loading-spinner {
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+// Error state styling
+.error-state {
+  .error-icon {
+    animation: pulse 2s infinite;
+  }
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+// Form container styling
+.form-container {
+  transition: opacity 0.3s ease;
+  
+  &.submitting {
+    opacity: 0.7;
+    pointer-events: none;
+  }
+}

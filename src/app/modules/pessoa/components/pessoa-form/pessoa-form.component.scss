@@ -1,0 +1,27 @@
+// Form validation styles
+input.ng-invalid.ng-touched,
+select.ng-invalid.ng-touched {
+  border-color: #ef4444;
+}
+
+input.ng-valid.ng-touched,
+select.ng-valid.ng-touched {
+  border-color: #10b981;
+}
+
+// Loading state
+.loading {
+  opacity: 0.6;
+  pointer-events: none;
+}
+
+// Responsive adjustments
+@media (max-width: 768px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .md\\:col-span-2 {
+    grid-column: span 1;
+  }
+}

@@ -1,0 +1,32 @@
+// Cadastro component styles
+.header-icon {
+  transition: transform 0.2s ease;
+}
+
+.header-icon:hover {
+  transform: scale(1.1);
+}
+
+// Loading state
+.form-container.loading {
+  opacity: 0.7;
+  pointer-events: none;
+}
+
+// Success indicator
+.success-indicator {
+  @apply bg-green-50 border border-green-200 text-green-800 px-4 py-3 rounded-lg;
+  
+  animation: slideInFromTop 0.3s ease;
+}
+
+@keyframes slideInFromTop {
+  from {
+    transform: translateY(-10px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}

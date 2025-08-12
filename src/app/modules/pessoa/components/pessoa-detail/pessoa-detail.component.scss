@@ -1,0 +1,43 @@
+// Detail view specific styles
+.person-detail {
+  .info-card {
+    transition: transform 0.2s ease-in-out;
+    
+    &:hover {
+      transform: translateY(-2px);
+    }
+  }
+}
+
+// Links styling
+a {
+  transition: color 0.2s ease-in-out;
+  
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
+// Action buttons
+.action-buttons {
+  button {
+    transition: all 0.2s ease-in-out;
+    
+    &:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+    }
+  }
+}
+
+// Responsive adjustments
+@media (max-width: 768px) {
+  .action-buttons {
+    flex-direction: column;
+    
+    button {
+      width: 100%;
+      margin-bottom: 0.5rem;
+    }
+  }
+}
