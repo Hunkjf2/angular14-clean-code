@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild, AfterViewInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable, Subject, of } from 'rxjs';
 import { takeUntil, catchError } from 'rxjs/operators';
@@ -17,9 +17,9 @@ import { MatPaginatorIntPtBr } from 'src/app/core/paginator/mat-paginator-ptBr';
     { provide: MatPaginatorIntl, useClass: MatPaginatorIntPtBr },
   ],
 })
-export class PessoaListComponent implements OnInit, OnDestroy {
+export class PessoaListComponent implements OnInit, OnDestroy, AfterViewInit {
   public readonly colunas: string[] = ['nome', 'cpf', 'email', 'acoes'];
-  protected dadosTabela = new MatTableDataSource<any>([]);
+  protected dadosTabela = new MatTableDataSource<Pessoa>([]);
   protected opcoesTamanhoPagina: number[] = [5, 10, 20];
   @ViewChild(MatPaginator) protected paginacao!: MatPaginator;
   @ViewChild(MatSort) protected ordenacao!: MatSort;
@@ -36,25 +36,58 @@ export class PessoaListComponent implements OnInit, OnDestroy {
     this.carregarPessoas();
   }
 
+  ngAfterViewInit(): void {
+    this.dadosTabela.paginator = this.paginacao;
+    this.dadosTabela.sort = this.ordenacao;
+  }
+
   ngOnDestroy(): void {
     this.destroy$.next();
     this.destroy$.complete();
   }
 
   private carregarPessoas(): void {
-    this.pessoaService.listarTodos().subscribe({
-      next: (pessoas: Pessoa[]) => this.dadosTabela.data = pessoas,
-      error: (_) => {
-
-      }
-    });
+    this.pessoaService.listarTodos()
+      .pipe(
+        takeUntil(this.destroy$),
+        catchError(error => {
+          console.error('Erro ao carregar pessoas:', error);
+          return of([]);
+        })
+      )
+      .subscribe({
+        next: (pessoas: Pessoa[]) => {
+          this.dadosTabela.data = pessoas;
+          
+          // Reconfigura o paginator após carregar os dados
+          if (this.paginacao) {
+            this.dadosTabela.paginator = this.paginacao;
+          }
+          
+          // Reconfigura o sort após carregar os dados
+          if (this.ordenacao) {
+            this.dadosTabela.sort = this.ordenacao;
+          }
+        },
+        error: (error) => {
+          console.error('Erro ao carregar pessoas:', error);
+        }
+      });
   }
-
 
   excluirPessoa(pessoa: Pessoa): void {
-    
+    if (confirm(`Tem certeza que deseja excluir ${pessoa.nome}?`)) {
+      this.pessoaService.remover(pessoa.id!.toString())
+        .pipe(takeUntil(this.destroy$))
+        .subscribe({
+          next: () => {
+            this.carregarPessoas();
+          },
+          error: (error) => {
+            console.error('Erro ao excluir pessoa:', error);
+          }
+        });
+    }
   }
-
-
-
+  
 }
