@@ -1,7 +1,8 @@
 import { Component, OnInit, OnDestroy, ViewChild, AfterViewInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable, Subject, of } from 'rxjs';
-import { takeUntil, catchError } from 'rxjs/operators';
+import { takeUntil, catchError, debounceTime, distinctUntilChanged } from 'rxjs/operators';
+import { FormControl } from '@angular/forms';
 import { Pessoa } from '../../models/pessoa.model';
 import { PessoaService } from '../../services/pessoa.service';
 import { MatTableDataSource } from '@angular/material/table';
@@ -21,8 +22,14 @@ export class PessoaListComponent implements OnInit, OnDestroy, AfterViewInit {
   public readonly colunas: string[] = ['nome', 'cpf', 'email', 'acoes'];
   protected dadosTabela = new MatTableDataSource<Pessoa>([]);
   protected opcoesTamanhoPagina: number[] = [5, 10, 20];
+  
+  // Controle do filtro
+  public filtroControl = new FormControl('');
+  private pessoasOriginais: Pessoa[] = [];
+
   @ViewChild(MatPaginator) protected paginacao!: MatPaginator;
   @ViewChild(MatSort) protected ordenacao!: MatSort;
+  
   public colunas$!: Observable<Pessoa[]>;
   private readonly destroy$ = new Subject<void>();
 
@@ -30,6 +37,7 @@ export class PessoaListComponent implements OnInit, OnDestroy, AfterViewInit {
     private readonly pessoaService: PessoaService,
     private readonly router: Router
   ) {
+    this.configurarFiltro();
   }
 
   ngOnInit(): void {
@@ -46,6 +54,38 @@ export class PessoaListComponent implements OnInit, OnDestroy, AfterViewInit {
     this.destroy$.complete();
   }
 
+  private configurarFiltro(): void {
+    this.filtroControl.valueChanges
+      .pipe(
+        debounceTime(300),
+        distinctUntilChanged(),
+        takeUntil(this.destroy$)
+      )
+      .subscribe(termo => this.aplicarFiltro(termo || ''));
+  }
+
+  private aplicarFiltro(termo: string): void {
+    if (!termo.trim()) {
+      this.dadosTabela.data = this.pessoasOriginais;
+      return;
+    }
+
+    const termoLower = termo.toLowerCase();
+    this.dadosTabela.data = this.pessoasOriginais.filter(pessoa =>
+      pessoa.nome?.toLowerCase().includes(termoLower) ||
+      pessoa.email?.toLowerCase().includes(termoLower) ||
+      pessoa.cpf?.replace(/\D/g, '').includes(termo.replace(/\D/g, ''))
+    );
+
+    if (this.paginacao) {
+      this.paginacao.firstPage();
+    }
+  }
+
+  public limparFiltro(): void {
+    this.filtroControl.setValue('');
+  }
+
   private carregarPessoas(): void {
     this.pessoaService.listarTodos()
       .pipe(
@@ -57,14 +97,13 @@ export class PessoaListComponent implements OnInit, OnDestroy, AfterViewInit {
       )
       .subscribe({
         next: (pessoas: Pessoa[]) => {
+          this.pessoasOriginais = pessoas;
           this.dadosTabela.data = pessoas;
           
-          // Reconfigura o paginator após carregar os dados
           if (this.paginacao) {
             this.dadosTabela.paginator = this.paginacao;
           }
           
-          // Reconfigura o sort após carregar os dados
           if (this.ordenacao) {
             this.dadosTabela.sort = this.ordenacao;
           }
@@ -89,5 +128,4 @@ export class PessoaListComponent implements OnInit, OnDestroy, AfterViewInit {
         });
     }
   }
-  
 }
