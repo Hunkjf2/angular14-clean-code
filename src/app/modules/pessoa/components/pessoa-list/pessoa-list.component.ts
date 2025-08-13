@@ -30,14 +30,15 @@ export class PessoaListComponent implements OnInit, OnDestroy, AfterViewInit {
   @ViewChild(MatPaginator) protected paginacao!: MatPaginator;
   @ViewChild(MatSort) protected ordenacao!: MatSort;
   
-  public colunas$!: Observable<Pessoa[]>;
   private readonly destroy$ = new Subject<void>();
 
   constructor(
     private readonly pessoaService: PessoaService,
     private readonly router: Router
   ) {
-    this.configurarFiltro();
+    // Configurar filtro customizado para MatTableDataSource
+    this.configurarFiltroCustomizado();
+    this.configurarFiltroInput();
   }
 
   ngOnInit(): void {
@@ -54,36 +55,52 @@ export class PessoaListComponent implements OnInit, OnDestroy, AfterViewInit {
     this.destroy$.complete();
   }
 
-  private configurarFiltro(): void {
+  private configurarFiltroCustomizado(): void {
+    // Configurar função de filtro customizada para o MatTableDataSource
+    this.dadosTabela.filterPredicate = (pessoa: Pessoa, filtro: string): boolean => {
+      if (!filtro.trim()) {
+        return true;
+      }
+
+      const termoLower = filtro.toLowerCase().trim();
+      
+      // Buscar em nome, email e CPF
+      const nome = pessoa.nome?.toLowerCase() || '';
+      const email = pessoa.email?.toLowerCase() || '';
+      const cpf = pessoa.cpf?.replace(/\D/g, '') || '';
+      const filtroNumerico = filtro.replace(/\D/g, '');
+
+      return nome.includes(termoLower) || 
+             email.includes(termoLower) || 
+             cpf.includes(filtroNumerico);
+    };
+  }
+
+  private configurarFiltroInput(): void {
     this.filtroControl.valueChanges
       .pipe(
         debounceTime(300),
         distinctUntilChanged(),
         takeUntil(this.destroy$)
       )
-      .subscribe(termo => this.aplicarFiltro(termo || ''));
+      .subscribe(termo => {
+        this.aplicarFiltro(termo || '');
+      });
   }
 
   private aplicarFiltro(termo: string): void {
-    if (!termo.trim()) {
-      this.dadosTabela.data = this.pessoasOriginais;
-      return;
-    }
-
-    const termoLower = termo.toLowerCase();
-    this.dadosTabela.data = this.pessoasOriginais.filter(pessoa =>
-      pessoa.nome?.toLowerCase().includes(termoLower) ||
-      pessoa.email?.toLowerCase().includes(termoLower) ||
-      pessoa.cpf?.replace(/\D/g, '').includes(termo.replace(/\D/g, ''))
-    );
-
-    if (this.paginacao) {
-      this.paginacao.firstPage();
+    // Usar o sistema de filtro nativo do MatTableDataSource
+    this.dadosTabela.filter = termo.trim();
+    
+    // Voltar para a primeira página após filtrar
+    if (this.dadosTabela.paginator) {
+      this.dadosTabela.paginator.firstPage();
     }
   }
 
   public limparFiltro(): void {
     this.filtroControl.setValue('');
+    this.dadosTabela.filter = '';
   }
 
   private carregarPessoas(): void {
@@ -99,14 +116,6 @@ export class PessoaListComponent implements OnInit, OnDestroy, AfterViewInit {
         next: (pessoas: Pessoa[]) => {
           this.pessoasOriginais = pessoas;
           this.dadosTabela.data = pessoas;
-          
-          if (this.paginacao) {
-            this.dadosTabela.paginator = this.paginacao;
-          }
-          
-          if (this.ordenacao) {
-            this.dadosTabela.sort = this.ordenacao;
-          }
         },
         error: (error) => {
           console.error('Erro ao carregar pessoas:', error);
@@ -121,6 +130,13 @@ export class PessoaListComponent implements OnInit, OnDestroy, AfterViewInit {
         .subscribe({
           next: () => {
             this.carregarPessoas();
+            // Manter o filtro após recarregar
+            const filtroAtual = this.filtroControl.value;
+            if (filtroAtual) {
+              setTimeout(() => {
+                this.aplicarFiltro(filtroAtual);
+              });
+            }
           },
           error: (error) => {
             console.error('Erro ao excluir pessoa:', error);
