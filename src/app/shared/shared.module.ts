@@ -19,6 +19,8 @@ import { CpfFormatPipe } from './pipes/cpf-format.pipe';
 import { PhoneFormatPipe } from './pipes/phone-format.pipe';
 import { FiltroComponent } from './components/filtro/filtro.component';
 import { CabecalhoComponent } from './components/cabecalho/cabecalho.component';
+import { NotificationService } from './services/Notification.service';
+import { UnsubscribeComponent } from './components/unsubscribe/unsubscribe.component';
 
 const PIPES = [
   CpfFormatPipe,
@@ -27,7 +29,8 @@ const PIPES = [
 
 const COMPONENTS = [
   FiltroComponent,
-  CabecalhoComponent
+  CabecalhoComponent,
+  UnsubscribeComponent
 ] as const;
 
 const MATERIAL_MODULES = [
@@ -64,7 +67,9 @@ const MODULES = [
     ...PIPES,
     ...COMPONENTS 
   ],
-  providers: []
+  providers: [
+    NotificationService
+  ]
 })
 export class SharedModule { 
   

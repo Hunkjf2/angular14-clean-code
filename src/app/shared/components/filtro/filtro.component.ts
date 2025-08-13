@@ -21,17 +21,16 @@ export class FiltroComponent implements AfterViewInit, OnDestroy {
   @ViewChild(MatSort) protected ordenacao!: MatSort;
   @Output() protected filtroAlterado = new EventEmitter<string>();
   protected opcoesTamanhoPagina: number[] = [5, 10, 20];
-  
-  private readonly destroy$ = new Subject<void>();
+  protected dadosTabela = new MatTableDataSource<any>([]);
+  protected readonly destroy$ = new Subject<void>();
+
+  public ngAfterViewInit(): void {
+    this.paginacaoOrdenacao();
+  }
 
   public ngOnDestroy(): void {
     this.destroy$.next();
     this.destroy$.complete();
-  }
-  protected dadosTabela = new MatTableDataSource<any>([]);
-
-  public ngAfterViewInit(): void {
-    this.paginacaoOrdenacao();
   }
 
   private paginacaoOrdenacao(): void {

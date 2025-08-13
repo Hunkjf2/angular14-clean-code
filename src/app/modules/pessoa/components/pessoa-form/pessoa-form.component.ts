@@ -13,8 +13,7 @@ export class PessoaFormComponent {
   @Input() public titulo: string | undefined = '';
   @Output() public enviar: EventEmitter<void> = new EventEmitter<void>();
 
-
-  getErrorMessage(fieldName: string): string {
+  public getErrorMessage(fieldName: string): string {
     return this.getFieldErrorMessage(this.formulario.get(fieldName));
   }
 
