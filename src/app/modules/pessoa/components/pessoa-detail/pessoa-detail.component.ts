@@ -4,7 +4,7 @@ import { Pessoa } from '../../models/pessoa.model';
 import { Formulario } from 'src/app/shared/model/formulario.model';
 import { FormularioPessoaService } from '../../services/fomrulario-pessoa.service';
 import { PessoaService } from '../../services/pessoa.service';
-import { UnsubscribeComponent } from 'src/app/shared/components/unsubscribe/unsubscribe.component';
+import { RxjsComponent } from 'src/app/shared/components/rxjs/rxjs.component';
 import { takeUntil } from 'rxjs';
 
 @Component({
@@ -12,7 +12,7 @@ import { takeUntil } from 'rxjs';
   templateUrl: './pessoa-detail.component.html',
   styleUrls: ['./pessoa-detail.component.scss']
 })
-export class PessoaDetailComponent extends UnsubscribeComponent implements OnInit {
+export class PessoaDetailComponent extends RxjsComponent implements OnInit {
 
   public formularioDetalhar: Formulario<Pessoa> = this.formularioPessoaService.formulario();
   private readonly pessoaId: string = this.activatedRoute.snapshot.params['id'];

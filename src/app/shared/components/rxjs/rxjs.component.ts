@@ -8,7 +8,7 @@ import { Subject, takeUntil, timer } from 'rxjs';
 @Directive({
   selector: 'app-unsubscribe',
 })
-export class UnsubscribeComponent implements OnDestroy {
+export class RxjsComponent implements OnDestroy {
 
   protected readonly destroy$ = new Subject<void>();
 

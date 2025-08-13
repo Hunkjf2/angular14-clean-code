@@ -4,7 +4,7 @@ import { PessoaService } from '../../services/pessoa.service';
 import { Formulario } from 'src/app/shared/model/formulario.model';
 import { Pessoa } from '../../models/pessoa.model';
 import { FormularioPessoaService } from '../../services/fomrulario-pessoa.service';
-import { UnsubscribeComponent } from 'src/app/shared/components/unsubscribe/unsubscribe.component';
+import { RxjsComponent } from 'src/app/shared/components/rxjs/rxjs.component';
 import { takeUntil } from 'rxjs';
 import { NotificationService } from 'src/app/shared/services/Notification.service';
 
@@ -13,7 +13,7 @@ import { NotificationService } from 'src/app/shared/services/Notification.servic
   templateUrl: './pessoa-editar.component.html',
   styleUrls: ['./pessoa-editar.component.scss']
 })
-export class PessoaEditarComponent extends UnsubscribeComponent implements OnInit {
+export class PessoaEditarComponent extends RxjsComponent implements OnInit {
   public formularioEditar: Formulario<Pessoa> = this.formularioPessoaService.formulario();
   private readonly pessoaId: string = this.activatedRoute.snapshot.params['id'];
 

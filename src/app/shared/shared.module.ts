@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 
-// Angular Material imports
 import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
@@ -20,7 +19,7 @@ import { PhoneFormatPipe } from './pipes/phone-format.pipe';
 import { FiltroComponent } from './components/filtro/filtro.component';
 import { CabecalhoComponent } from './components/cabecalho/cabecalho.component';
 import { NotificationService } from './services/Notification.service';
-import { UnsubscribeComponent } from './components/unsubscribe/unsubscribe.component';
+import { RxjsComponent } from './components/rxjs/rxjs.component';
 
 const PIPES = [
   CpfFormatPipe,
@@ -30,7 +29,7 @@ const PIPES = [
 const COMPONENTS = [
   FiltroComponent,
   CabecalhoComponent,
-  UnsubscribeComponent
+  RxjsComponent
 ] as const;
 
 const MATERIAL_MODULES = [
