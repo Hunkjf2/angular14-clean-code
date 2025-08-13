@@ -1,37 +1,33 @@
-import { CommonModule } from '@angular/common';
 import { 
   AfterViewInit,
   Component, 
   EventEmitter, 
+  OnDestroy, 
   Output, 
   ViewChild,
 } from '@angular/core';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatIconModule } from '@angular/material/icon';
-import { MatInputModule } from '@angular/material/input';
-import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
-import { MatSort, MatSortModule } from '@angular/material/sort';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
+import { Subject } from 'rxjs';
 
 @Component({
   selector: 'app-filtro',
   templateUrl: 'filtro.component.html',
-  imports: [
-    CommonModule,
-    MatInputModule,
-    MatIconModule,
-    MatFormFieldModule,
-    MatPaginatorModule,
-    MatSortModule
-  ],
-  standalone: true,
 })
-export class FiltroComponent implements AfterViewInit {
+export class FiltroComponent implements AfterViewInit, OnDestroy {
 
   @ViewChild(MatPaginator) protected paginacao!: MatPaginator;
   @ViewChild(MatSort) protected ordenacao!: MatSort;
   @Output() protected filtroAlterado = new EventEmitter<string>();
   protected opcoesTamanhoPagina: number[] = [5, 10, 20];
+  
+  private readonly destroy$ = new Subject<void>();
+
+  public ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
+  }
   protected dadosTabela = new MatTableDataSource<any>([]);
 
   public ngAfterViewInit(): void {

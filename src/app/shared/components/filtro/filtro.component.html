@@ -1,5 +1,2 @@
-<mat-form-field appearance="outline" class="w-full">
-    <mat-label>Pesquisar</mat-label>
-    <input matInput placeholder="Digite para pesquisar..." (keyup)="filtro($event)" autocomplete="off">
-    <mat-icon matSuffix>search</mat-icon>
-</mat-form-field>
+<input (keyup)="filtro($event)" autocomplete="off" placeholder="Pesquisar por nome, email ou CPF..." type="text"
+    class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">

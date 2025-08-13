@@ -17,10 +17,17 @@ import { MatNativeDateModule } from '@angular/material/core';
 
 import { CpfFormatPipe } from './pipes/cpf-format.pipe';
 import { PhoneFormatPipe } from './pipes/phone-format.pipe';
+import { FiltroComponent } from './components/filtro/filtro.component';
+import { CabecalhoComponent } from './components/cabecalho/cabecalho.component';
 
 const PIPES = [
   CpfFormatPipe,
   PhoneFormatPipe
+] as const;
+
+const COMPONENTS = [
+  FiltroComponent,
+  CabecalhoComponent
 ] as const;
 
 const MATERIAL_MODULES = [
@@ -46,14 +53,16 @@ const MODULES = [
 
 @NgModule({
   declarations: [
-    ...PIPES
+    ...PIPES,
+    ...COMPONENTS
   ],
   imports: [
     ...MODULES
   ],
   exports: [
     ...MODULES,
-    ...PIPES
+    ...PIPES,
+    ...COMPONENTS 
   ],
   providers: []
 })

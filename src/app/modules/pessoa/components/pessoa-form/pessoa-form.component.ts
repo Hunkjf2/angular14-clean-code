@@ -10,6 +10,7 @@ import { Formulario } from 'src/app/shared/model/formulario.model';
 export class PessoaFormComponent {
 
   @Input() public formulario!: Formulario<Pessoa>;
+  @Input() public titulo: string | undefined = '';
   @Output() public enviar: EventEmitter<void> = new EventEmitter<void>();
 
 
