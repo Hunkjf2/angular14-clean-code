@@ -6,7 +6,7 @@ import { Router } from '@angular/router';
 import { Subject, takeUntil, timer } from 'rxjs';
 
 @Directive({
-  selector: 'app-unsubscribe',
+  selector: 'app-rxjs',
 })
 export class RxjsComponent implements OnDestroy {
 

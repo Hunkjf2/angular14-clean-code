@@ -9,14 +9,14 @@ import { MensagemSistema } from 'src/app/shared/enum/mensagem-sistema.enum';
 import { filter, switchMap, takeUntil } from 'rxjs';
 
 @Component({
-  selector: 'app-pessoa-list',
-  templateUrl: './pessoa-list.component.html',
-  styleUrls: ['./pessoa-list.component.scss'],
+  selector: 'app-pessoa-listar',
+  templateUrl: './pessoa-listar.component.html',
+  styleUrls: ['./pessoa-listar.component.scss'],
   providers: [
     { provide: MatPaginatorIntl, useClass: MatPaginatorIntPtBr },
   ],
 })
-export class PessoaListComponent extends FiltroComponent implements OnInit, AfterViewInit {
+export class PessoaListarComponent extends FiltroComponent implements OnInit, AfterViewInit {
 
   public readonly colunas: string[] = ['nome', 'cpf', 'email', 'acoes'];
   

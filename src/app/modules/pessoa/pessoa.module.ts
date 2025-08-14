@@ -1,19 +1,19 @@
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { SharedModule } from '../../shared/shared.module';
-import { PessoaListComponent } from './components/pessoa-list/pessoa-list.component';
-import { PessoaFormComponent } from './components/pessoa-form/pessoa-form.component';
-import { PessoaDetailComponent } from './components/pessoa-detail/pessoa-detail.component';
-import { PessoaCadastroComponent } from './components/pessoa-cadastro/pessoa-cadastro.component';
-import { PessoaEditarComponent } from './components/pessoa-editar/pessoa-editar.component';
+import { PessoaFormComponent } from './pages/pessoa-form/pessoa-form.component';
+import { PessoaCadastroComponent } from './pages/pessoa-cadastro/pessoa-cadastro.component';
+import { PessoaEditarComponent } from './pages/pessoa-editar/pessoa-editar.component';
 import { PessoaService } from './services/pessoa.service';
 import { FormularioPessoaService } from './services/fomrulario-pessoa.service';
+import { PessoaListarComponent } from './pages/pessoa-listar/pessoa-listar.component';
+import { PessoaDetalharComponent } from './pages/pessoa-detalhar/pessoa-detalhar.component';
 
 @NgModule({
   declarations: [
-    PessoaListComponent,
+    PessoaListarComponent,
     PessoaFormComponent,
-    PessoaDetailComponent,
+    PessoaDetalharComponent,
     PessoaCadastroComponent,
     PessoaEditarComponent
   ],
@@ -26,9 +26,9 @@ import { FormularioPessoaService } from './services/fomrulario-pessoa.service';
     PessoaService,
   ],
   exports: [
-    PessoaListComponent,
+    PessoaListarComponent,
     PessoaFormComponent,
-    PessoaDetailComponent,
+    PessoaDetalharComponent,
     PessoaCadastroComponent,
     PessoaEditarComponent
   ]

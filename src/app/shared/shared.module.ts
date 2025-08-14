@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
-
+import { NgxMaskModule, IConfig } from 'ngx-mask';
 import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
@@ -13,7 +13,6 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
-
 import { CpfFormatPipe } from './pipes/cpf-format.pipe';
 import { PhoneFormatPipe } from './pipes/phone-format.pipe';
 import { FiltroComponent } from './components/filtro/filtro.component';
@@ -46,7 +45,11 @@ const MATERIAL_MODULES = [
   MatNativeDateModule
 ] as const;
 
-const MODULES = [
+const maskConfig: Partial<IConfig> = {
+  validation: false,
+};
+
+const BASE_MODULES = [
   CommonModule,
   ReactiveFormsModule,
   FormsModule,
@@ -59,10 +62,12 @@ const MODULES = [
     ...COMPONENTS
   ],
   imports: [
-    ...MODULES
+    ...BASE_MODULES,
+    NgxMaskModule.forRoot(maskConfig)
   ],
   exports: [
-    ...MODULES,
+    ...BASE_MODULES,
+    NgxMaskModule,
     ...PIPES,
     ...COMPONENTS 
   ],
@@ -71,13 +76,10 @@ const MODULES = [
   ]
 })
 export class SharedModule { 
-  
-  // Método estático para importação com configurações personalizadas
   static forRoot() {
     return {
       ngModule: SharedModule,
       providers: [
-        // Aqui você pode adicionar providers globais personalizados
       ]
     };
   }

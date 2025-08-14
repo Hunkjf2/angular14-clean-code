@@ -16,11 +16,7 @@
     </div>
 
     <div class="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-2xl mx-auto px-4">
-      <!-- Listar Pessoas -->
-      <div 
-        (click)="navegarPessoas()" 
-        class="bg-white hover:bg-gray-50 border-2 border-gray-200 hover:border-blue-300 rounded-xl p-8 cursor-pointer transition-all duration-200 shadow-sm hover:shadow-md group"
-      >
+      <div (click)="navegarPessoas()" class="bg-white hover:bg-gray-50 border-2 border-gray-200 hover:border-blue-300 rounded-xl p-8 cursor-pointer transition-all duration-200 shadow-sm hover:shadow-md group">
         <div class="text-blue-600 mb-4 group-hover:scale-110 transition-transform duration-200">
           <svg class="w-12 h-12 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01" />
@@ -32,11 +28,7 @@
         </p>
       </div>
 
-      <!-- Nova Pessoa -->
-      <div 
-        (click)="novaPessoa()" 
-        class="bg-blue-600 hover:bg-blue-700 text-white rounded-xl p-8 cursor-pointer transition-all duration-200 shadow-sm hover:shadow-md group"
-      >
+      <div (click)="novaPessoa()" class="bg-blue-600 hover:bg-blue-700 text-white rounded-xl p-8 cursor-pointer transition-all duration-200 shadow-sm hover:shadow-md group">
         <div class="mb-4 group-hover:scale-110 transition-transform duration-200">
           <svg class="w-12 h-12 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
@@ -49,10 +41,8 @@
       </div>
     </div>
 
-    <!-- Features -->
     <div class="mt-16 max-w-4xl mx-auto px-4">
       <h2 class="text-2xl font-bold text-gray-900 mb-8 text-center">Recursos do Sistema</h2>
-      
       <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
         <div class="text-center">
           <div class="bg-green-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
@@ -63,7 +53,6 @@
           <h3 class="text-lg font-semibold text-gray-900 mb-2">Validação de CPF</h3>
           <p class="text-gray-600">Validação automática de CPF usando bibliotecas brasileiras especializadas</p>
         </div>
-
         <div class="text-center">
           <div class="bg-purple-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
             <svg class="w-8 h-8 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -74,7 +63,6 @@
           <h3 class="text-lg font-semibold text-gray-900 mb-2">Interface Responsiva</h3>
           <p class="text-gray-600">Design moderno e responsivo que funciona perfeitamente em qualquer dispositivo</p>
         </div>
-
         <div class="text-center">
           <div class="bg-yellow-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
             <svg class="w-8 h-8 text-yellow-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">

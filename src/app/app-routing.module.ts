@@ -1,16 +1,16 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { HomeComponent } from './components/home/home.component';
-import { PessoaListComponent } from './modules/pessoa/components/pessoa-list/pessoa-list.component';
-import { PessoaCadastroComponent } from './modules/pessoa/components/pessoa-cadastro/pessoa-cadastro.component';
-import { PessoaEditarComponent } from './modules/pessoa/components/pessoa-editar/pessoa-editar.component';
-import { PessoaDetailComponent } from './modules/pessoa/components/pessoa-detail/pessoa-detail.component';
+import { PessoaListarComponent } from './modules/pessoa/pages/pessoa-listar/pessoa-listar.component';
+import { PessoaCadastroComponent } from './modules/pessoa/pages/pessoa-cadastro/pessoa-cadastro.component';
+import { PessoaEditarComponent } from './modules/pessoa/pages/pessoa-editar/pessoa-editar.component';
+import { PessoaDetalharComponent } from './modules/pessoa/pages/pessoa-detalhar/pessoa-detalhar.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
-  { path: 'pessoas', component: PessoaListComponent },
+  { path: 'pessoas', component: PessoaListarComponent },
   { path: 'pessoas/novo', component: PessoaCadastroComponent },
-  { path: 'pessoas/detalhar/:id', component: PessoaDetailComponent },
+  { path: 'pessoas/detalhar/:id', component: PessoaDetalharComponent },
   { path: 'pessoas/editar/:id', component: PessoaEditarComponent },
   { path: '**', redirectTo: '' }
 ];

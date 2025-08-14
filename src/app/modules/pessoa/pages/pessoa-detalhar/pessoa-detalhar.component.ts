@@ -8,11 +8,11 @@ import { RxjsComponent } from 'src/app/shared/components/rxjs/rxjs.component';
 import { takeUntil } from 'rxjs';
 
 @Component({
-  selector: 'app-pessoa-detail',
-  templateUrl: './pessoa-detail.component.html',
-  styleUrls: ['./pessoa-detail.component.scss']
+  selector: 'app-pessoa-detalhar',
+  templateUrl: './pessoa-detalhar.component.html',
+  styleUrls: ['./pessoa-detalhar.component.scss']
 })
-export class PessoaDetailComponent extends RxjsComponent implements OnInit {
+export class PessoaDetalharComponent extends RxjsComponent implements OnInit {
 
   public formularioDetalhar: Formulario<Pessoa> = this.formularioPessoaService.formulario();
   private readonly pessoaId: string = this.activatedRoute.snapshot.params['id'];
